@@ -1,0 +1,15 @@
+@{
+  Layout = "_Layout";
+}
+
+@model UniversityRegistrar.Models.Course
+
+<h2>Course Details</h2>
+<hr />
+<br>
+<h4>@Html.DisplayNameFor(model => model.Name): @Html.DisplayFor(model => model.Name)</h4>
+<h4>@Html.DisplayNameFor(model => model.CourseNumber): @Html.DisplayFor(model => model.CourseNumber)</h4>
+<br>
+<p>@Html.ActionLink($"Edit {Model.Name}", "Edit", new { id = Model.CourseId })</p>
+<p>@Html.ActionLink($"Delete {Model.Name} 😞", "Delete", new { id = Model.CourseId })</p>
+<p>@Html.ActionLink("Back to course list", "Index")</p>
