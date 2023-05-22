@@ -1,0 +1,34 @@
+@{
+  Layout = "_Layout";
+}
+
+@model UniversityRegistrar.Models.Student
+
+<h2>Edit</h2>
+
+<h4>Edit student: @Html.DisplayFor(model => model.Name)</h4>
+
+@using (Html.BeginForm())
+{
+  @Html.HiddenFor(model => model.StudentId)
+
+  @Html.LabelFor(model => model.Name)
+  @Html.EditorFor(model => model.Name)
+
+  <br>
+  <br>
+
+  @Html.LabelFor(model => model.DOE)  
+  @Html.EditorFor(model => model.DOE, new { type = "date"})
+
+  <br>
+  <br>
+
+  <input type="submit" value="Save" />
+}
+
+<br>
+<br>
+
+<p>@Html.ActionLink("Delte @Model.Name", "Delete")</p>
+<p>@Html.ActionLink("Back to student list", "Index")</p>
