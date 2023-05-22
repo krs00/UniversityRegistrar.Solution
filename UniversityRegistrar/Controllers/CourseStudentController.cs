@@ -7,33 +7,38 @@ using System.Linq;
 
 namespace UniversityRegistrar.Controllers
 {
-  public class StudentsController : Controller
+  public class CourseStudentsController : Controller
   {
     private readonly UniversityRegistrarContext _db;
 
-    public StudentsController(UniversityRegistrarContext db)
+    public CourseStudentsController(UniversityRegistrarContext db)
     {
       _db = db;
     }
 
     public ActionResult Index()
     {
-      List<Student> model = _db.Students.ToList();
+      List<CourseStudent> model = _db.CourseStudents.ToList();
       return View(model);
     }
 
-    public ActionResult Create()
-    {
-      return View();
-    }
+    // public ActionResult Create()
+    // {
+    //   // ViewBag.CategoryId = new SelectList(_db.Categories, "CategoryId", "Name");
+    //   return View();
+    // }
 
-    [HttpPost]
-    public ActionResult Create(Student student)
-    {
-      _db.Students.Add(student);
-      _db.SaveChanges();
-      return RedirectToAction("Index");
-    }
+    // [HttpPost]
+    // public ActionResult Create(Item item)
+    // {
+    //   // if (item.CategoryId == 0)
+    //   // {
+    //   //   return RedirectToAction("Create");
+    //   // }
+    //   // _db.Items.Add(item);
+    //   // _db.SaveChanges();
+    //   return RedirectToAction("Index");
+    // }
 
     // public ActionResult Details(int id)
     // {
