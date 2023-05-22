@@ -1,9 +1,9 @@
 using Microsoft.AspNetCore.Builder;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
-using Template.Models;
+using UniversityRegistrar.Models;
 
-namespace Template
+namespace UniversityRegistrar
 {
   class Program
   {
@@ -14,7 +14,7 @@ namespace Template
 
       builder.Services.AddControllersWithViews();
 
-      builder.Services.AddDbContext<ToDoListContext>(
+      builder.Services.AddDbContext<UniversityRegistrarContext>(
                         dbContextOptions => dbContextOptions
                           .UseMySql(
                             builder.Configuration["ConnectionStrings:DefaultConnection"], ServerVersion.AutoDetect(builder.Configuration["ConnectionStrings:DefaultConnection"]
