@@ -5,16 +5,27 @@
 @model UniversityRegistrar.Models.Student
 
 <h2>Add a student to the registrar</h2>
+<br>
 
 @using (Html.BeginForm())
 {
   @Html.LabelFor(model => model.Name)
   @Html.TextBoxFor(model => model.Name)
 
+  <br>
+  <br>
+
   @Html.LabelFor(model => model.DOE)
   @Html.TextBoxFor(model => model.DOE, new { type = "date"})
 
+  <br>
+  <br>
+
+  @* @Html.LabelFor(model =>  )
+  @Html.DropDownList() *@
+
   <input type="submit" value="Add new student"/>
 }
+<br>
 
 <p>@Html.ActionLink("View all students", "Index")</p>

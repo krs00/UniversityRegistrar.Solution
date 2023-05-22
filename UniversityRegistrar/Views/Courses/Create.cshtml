@@ -5,16 +5,24 @@
 @model UniversityRegistrar.Models.Course
 
 <h2>Add a course to the registrar</h2>
+<br>
 
 @using (Html.BeginForm())
 {
   @Html.LabelFor(model => model.Name)
   @Html.TextBoxFor(model => model.Name)
 
+  <br>
+  <br> 
+
   @Html.LabelFor(model => model.CourseNumber)
   @Html.TextBoxFor(model => model.CourseNumber)
 
+  <br>
+  <br>
+
   <input type="submit" value="Add new course"/>
 }
+<br>
 
 <p>@Html.ActionLink("View all courses", "Index")</p>

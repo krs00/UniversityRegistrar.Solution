@@ -2,6 +2,7 @@
   Layout = "_Layout";
 }
 
+@using UniversityRegistrar.Models;
 @model UniversityRegistrar.Models.Student
 
 <h2>Student Details</h2>
@@ -9,7 +10,32 @@
 <br>
 <h4>@Html.DisplayNameFor(model => model.Name): @Html.DisplayFor(model => model.Name)</h4>
 <h4>@Html.DisplayNameFor(model => model.DOE): @Html.DisplayFor(model => model.DOE, new { @type = "date" })</h4>
+
+@if(@Model.JoinEntities.Count == 0)
+{
+  <p>This student hasn't been assigned to any courses yet!</p>
+}
+else
+{
+  <h4>This student is enrolled in the following courses:</h4>
+  <ul>
+    @foreach(CourseStudent join in Model.JoinEntities)
+    {
+      <li>Course: @join.Course.Name</li>
+      @using (Html.BeginForm("DeleteJoin", "Students"))
+      {
+        @Html.Hidden("joinId", join.CourseStudentId)
+        <input type="submit" value="Remove course"/>
+      }
+    }
+  </ul>
+}
+
+@Html.ActionLink("Add course to this student", "AddCourse", new { id = Model.StudentId })
+
 <br>
+
+<p>@Html.ActionLink($"Add Course", "AddCourse", new { id = Model.StudentId })</p>
 <p>@Html.ActionLink($"Edit {Model.Name}", "Edit", new { id = Model.StudentId })</p>
 <p>@Html.ActionLink($"Delete {Model.Name} 😞", "Delete", new { id = Model.StudentId })</p>
 <p>@Html.ActionLink("Back to student list", "Index")</p>
