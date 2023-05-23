@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using System;
+using System.ComponentModel.DataAnnotations;
 
 namespace UniversityRegistrar.Models
 {

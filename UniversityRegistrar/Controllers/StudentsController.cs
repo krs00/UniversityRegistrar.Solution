@@ -31,9 +31,16 @@ namespace UniversityRegistrar.Controllers
     [HttpPost]
     public ActionResult Create(Student student)
     {
-      _db.Students.Add(student);
-      _db.SaveChanges();
-      return RedirectToAction("Index");
+      if (!ModelState.IsValid)
+      {
+        return View(student);
+      }
+      else
+      {
+        _db.Students.Add(student);
+        _db.SaveChanges();
+        return RedirectToAction("Index");
+      }
     }
 
     public ActionResult Details(int id)
@@ -51,18 +58,18 @@ namespace UniversityRegistrar.Controllers
       return View(thisStudent);
     }
 
-    [HttpPost] 
+    [HttpPost]
     public ActionResult Edit(Student student)
     {
-      _db.Students.Update(student); 
+      _db.Students.Update(student);
       _db.SaveChanges();
       return RedirectToAction("Index");
     }
 
-    public ActionResult Delete(int id) 
+    public ActionResult Delete(int id)
     {
       Student thisStudent = _db.Students.FirstOrDefault(student => student.StudentId == id);
-      return View(thisStudent);  
+      return View(thisStudent);
     }
 
     [HttpPost, ActionName("Delete")]
@@ -70,7 +77,7 @@ namespace UniversityRegistrar.Controllers
     {
       Student thisStudent = _db.Students.FirstOrDefault(student => student.StudentId == id);
       _db.Students.Remove(thisStudent);
-      _db.SaveChanges(); 
+      _db.SaveChanges();
       return RedirectToAction("Index");
     }
 
@@ -84,12 +91,12 @@ namespace UniversityRegistrar.Controllers
     [HttpPost]
     public ActionResult AddCourse(Student student, int courseId)
     {
-      #nullable enable
+#nullable enable
       CourseStudent? joinEntity = _db.CourseStudents.FirstOrDefault(join => join.CourseId == courseId && join.StudentId == student.StudentId);
-      #nullable disable
+#nullable disable
       if (joinEntity == null && courseId != 0)
       {
-        _db.CourseStudents.Add(new CourseStudent() {CourseId = courseId, StudentId = student.StudentId});
+        _db.CourseStudents.Add(new CourseStudent() { CourseId = courseId, StudentId = student.StudentId });
         _db.SaveChanges();
       }
       return RedirectToAction("Details", new { id = student.StudentId });

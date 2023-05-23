@@ -6,10 +6,12 @@ namespace UniversityRegistrar.Models
 {
   public class Student
   {
+    public int StudentId { get; set; }
+    [Required(ErrorMessage = "You must input a name for the student")]
+    public string Name { get; set; }
     [DataType(DataType.Date)]
     [DisplayFormat(DataFormatString = "{0:yyyy-MM-dd}", ApplyFormatInEditMode = true)]
-    public int StudentId { get; set; }
-    public string Name { get; set; }
+    [Required(ErrorMessage = "Student must have enrollment date")]
     public DateTime DOE { get; set; }
     public List<CourseStudent> JoinEntities { get; }
   }

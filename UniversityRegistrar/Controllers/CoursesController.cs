@@ -30,9 +30,16 @@ namespace UniversityRegistrar.Controllers
     [HttpPost]
     public ActionResult Create(Course course)
     {
-      _db.Courses.Add(course);
-      _db.SaveChanges();
-      return RedirectToAction("Index");
+      if (!ModelState.IsValid)
+      {
+        return View(course);
+      }
+      else
+      {
+        _db.Courses.Add(course);
+        _db.SaveChanges();
+        return RedirectToAction("Index");
+      }
     }
 
     public ActionResult Details(int id)
@@ -83,12 +90,12 @@ namespace UniversityRegistrar.Controllers
     [HttpPost]
     public ActionResult AddStudent(Course course, int studentId)
     {
-      #nullable enable
+#nullable enable
       CourseStudent? joinEntity = _db.CourseStudents.FirstOrDefault(join => join.StudentId == studentId && join.CourseId == course.CourseId);
-      #nullable disable
+#nullable disable
       if (joinEntity == null && studentId != 0)
       {
-        _db.CourseStudents.Add(new CourseStudent() {CourseId = course.CourseId, StudentId = studentId});
+        _db.CourseStudents.Add(new CourseStudent() { CourseId = course.CourseId, StudentId = studentId });
         _db.SaveChanges();
       }
       return RedirectToAction("Details", new { id = course.CourseId });
