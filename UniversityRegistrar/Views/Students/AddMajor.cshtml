@@ -1,0 +1,29 @@
+@{
+  Layout = "_Layout";
+}
+
+@model UniversityRegistrar.Models.Student
+
+<h2>Declare Major</h2>
+
+<h4>Declare a major for this student: @Html.DisplayFor(model => model.Name)</h4>
+
+@if (Model.JoinMajors.Count > 2)
+{
+  <h4>Each student can only have up to 2 majors!</h4>
+}
+else
+{
+  @using (Html.BeginForm())
+  {
+    @Html.HiddenFor(model => model.StudentId)
+
+    @Html.Label("Select major")
+    @Html.DropDownList("MajorId")
+
+    <input type="submit" value="Save" />
+  }
+}
+
+
+<p>@Html.ActionLink("Back to student list", "Index")</p>

@@ -10,6 +10,5 @@ namespace UniversityRegistrar.Models
     public string Name { get; set; }
     public List<Student> Students { get; }
     public List<Course> Courses { get; }
-
   }
 }

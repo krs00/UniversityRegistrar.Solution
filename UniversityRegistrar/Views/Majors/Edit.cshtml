@@ -1,0 +1,28 @@
+@{
+  Layout = "_Layout";
+}
+
+@model UniversityRegistrar.Models.Major
+
+<h2>Edit</h2>
+
+<h4>Edit Major: @Html.DisplayFor(model => model.Name)</h4>
+
+@using (Html.BeginForm())
+{
+  @Html.HiddenFor(model => model.MajorId)
+
+  @Html.LabelFor(model => model.Name)
+  @Html.EditorFor(model => model.Name)
+  <br>
+  @Html.LabelFor(model => model.DepartmentId)
+  @Html.DropDownList("DepartmentId")
+
+  <input type="submit" value="Save" />
+}
+
+<br>
+<br>
+
+<p>@Html.ActionLink($"Delete {Model.Name}", "Delete")</p>
+<p>@Html.ActionLink("Back to list", "Index")</p>

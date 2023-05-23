@@ -48,6 +48,8 @@ namespace UniversityRegistrar.Controllers
       Student thisStudent = _db.Students
                           .Include(student => student.JoinEntities)
                           .ThenInclude(join => join.Course)
+                          .Include(student => student.JoinMajors)
+                          .ThenInclude(major => major.Major)
                           .FirstOrDefault(student => student.StudentId == id);
       return View(thisStudent);
     }
@@ -103,12 +105,45 @@ namespace UniversityRegistrar.Controllers
     }
 
     [HttpPost]
-    public ActionResult DeleteJoin(int joinId)
+    public ActionResult DeleteJoin(int joinId, int id)
     {
       CourseStudent joinEntry = _db.CourseStudents.FirstOrDefault(entry => entry.CourseStudentId == joinId);
       _db.CourseStudents.Remove(joinEntry);
       _db.SaveChanges();
-      return RedirectToAction("Details");
+      return RedirectToAction("Index");
+    }
+
+    public ActionResult AddMajor(int id)
+    {
+      Student thisStudent = _db.Students
+                                        .Include(student => student.JoinMajors)
+                                        .ThenInclude(major => major.Major)
+                                        .FirstOrDefault(students => students.StudentId == id);
+      ViewBag.MajorId = new SelectList(_db.Majors, "MajorId", "Name");
+      return View(thisStudent);
+    }
+
+    [HttpPost]
+    public ActionResult AddMajor(Student student, int majorId)
+    {
+#nullable enable
+      StudentMajor? joinEntity = _db.StudentMajors.FirstOrDefault(join => join.MajorId == majorId && join.StudentId == student.StudentId);
+#nullable disable
+      if (joinEntity == null && majorId != 0)
+      {
+        _db.StudentMajors.Add(new StudentMajor() { MajorId = majorId, StudentId = student.StudentId });
+        _db.SaveChanges();
+      }
+      return RedirectToAction("Details", new { id = student.StudentId });
+    }
+
+    [HttpPost]
+    public ActionResult DeleteJoinMajor(int joinId, int id)
+    {
+      StudentMajor joinEntry = _db.StudentMajors.FirstOrDefault(entry => entry.StudentMajorId == joinId);
+      _db.StudentMajors.Remove(joinEntry);
+      _db.SaveChanges();
+      return RedirectToAction("Index");
     }
   }
 }
