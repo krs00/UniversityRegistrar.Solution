@@ -1,0 +1,40 @@
+@{
+  Layout = "_Layout";
+}
+
+@using UniversityRegistrar.Models;
+@model UniversityRegistrar.Models.Department
+
+<h2>Department Details</h2>
+<hr />
+<br>
+<h4>@Html.DisplayNameFor(model => model.Name): @Html.DisplayFor(model => model.Name)</h4>
+
+@if(@Model.Courses.Count == 0)
+{
+  <p>No courses have been added to the @Html.DisplayFor(model => model.Name) Department yet!</p>
+}
+else
+{
+  <h4>This Department offers the following courses:</h4>
+  <ul>
+    @foreach(Course course in Model.Courses)
+    {
+      <li>@course.CourseNumber: @course.Name</li>
+      @using (Html.BeginForm("DeleteCourse", "Departments"))
+      {
+        @Html.Hidden("CourseId", course.CourseId)
+        <input type="submit" value="Remove course from department"/>
+      }
+    }
+  </ul>
+}
+
+@Html.ActionLink("Add course to this Department", "AddCourse", new { id = Model.DepartmentId })
+
+<br>
+
+<p>@Html.ActionLink($"Create New Course", "Create", "Courses")</p>
+<p>@Html.ActionLink($"Edit {Model.Name}", "Edit", new { id = Model.DepartmentId })</p>
+<p>@Html.ActionLink($"Delete {Model.Name} 😞", "Delete", new { id = Model.DepartmentId })</p>
+<p>@Html.ActionLink("Back to Department list", "Index")</p>

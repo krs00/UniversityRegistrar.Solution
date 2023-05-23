@@ -1,5 +1,4 @@
 using System.Collections.Generic;
-using System;
 using System.ComponentModel.DataAnnotations;
 
 namespace UniversityRegistrar.Models
@@ -12,6 +11,11 @@ namespace UniversityRegistrar.Models
     [Required(ErrorMessage = "You must enter course name!")]
     public string CourseNumber { get; set; }
     public List<CourseStudent> JoinEntities { get; }
+    [Required(ErrorMessage = "Course must belong to a department!")]
+    public int DepartmentId { get; set; } // NAVIGATION PROPERTY
+    public Department Department { get; set; } // REFERENCE NAVIGATION PROPERTY
+
+
 
   }
 }

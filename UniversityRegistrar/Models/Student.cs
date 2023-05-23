@@ -14,5 +14,6 @@ namespace UniversityRegistrar.Models
     [Required(ErrorMessage = "Student must have enrollment date")]
     public DateTime DOE { get; set; }
     public List<CourseStudent> JoinEntities { get; }
+    public int DepartmentId { get; set; }
   }
 }

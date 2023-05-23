@@ -18,12 +18,15 @@ namespace UniversityRegistrar.Controllers
 
     public ActionResult Index()
     {
-      List<Course> model = _db.Courses.ToList();
+      List<Course> model = _db.Courses
+                                      .Include(course => course.Department)
+                                      .ToList();
       return View(model);
     }
 
     public ActionResult Create()
     {
+      ViewBag.DepartmentId = new SelectList(_db.Departments, "DepartmentId", "Name");
       return View();
     }
 
@@ -32,6 +35,7 @@ namespace UniversityRegistrar.Controllers
     {
       if (!ModelState.IsValid)
       {
+        ViewBag.DepartmentId = new SelectList(_db.Departments, "DepartmentId", "Name");
         return View(course);
       }
       else
@@ -45,6 +49,7 @@ namespace UniversityRegistrar.Controllers
     public ActionResult Details(int id)
     {
       Course thisCourse = _db.Courses
+                          .Include(course => course.Department)
                           .Include(course => course.JoinEntities)
                           .ThenInclude(join => join.Student)
                           .FirstOrDefault(course => course.CourseId == id);

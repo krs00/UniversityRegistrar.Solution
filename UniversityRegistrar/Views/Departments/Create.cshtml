@@ -1,0 +1,20 @@
+@{
+  Layout = "_Layout";
+}
+
+@model UniversityRegistrar.Models.Department
+
+<h2>Add a department to the university</h2>
+<br>
+
+@using (Html.BeginForm())
+{
+  @Html.LabelFor(model => model.Name)
+  @Html.TextBoxFor(model => model.Name)
+
+  <input type="submit" value="Add new department"/>
+}
+<br>
+
+<h3>@Html.ValidationMessageFor(model => model.Name, "", new { @style = "color: Red;" })</h3>
+<p>@Html.ActionLink("View all departments", "Index")</p>
